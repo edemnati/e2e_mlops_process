@@ -1,0 +1,16 @@
+feature_stores:
+- features:
+  - feature_name: accountAge
+    feature_set: accounts:4
+  - feature_name: numPaymentRejects1dPerUser
+    feature_set: accounts:4
+  - feature_name: transaction_amount_7d_sum
+    feature_set: transactions:4
+  - feature_name: transaction_amount_3d_sum
+    feature_set: transactions:4
+  - feature_name: transaction_amount_7d_avg
+    feature_set: transactions:4
+  location: eastus
+  uri: azureml://subscriptions/e0d7a68e-191f-4f51-83ce-d93995cd5c09/resourcegroups/my_ml_tests/workspaces/my-featurestore-e2e-test2
+  workspace_id: 5161a1ec-0a76-4085-941e-20efbb2e8fc3
+serialization_version: 2

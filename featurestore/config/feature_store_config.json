@@ -1,0 +1,62 @@
+{"name" : "my-featurestore-e2e-test2",
+ "subscription_id" : "e0d7a68e-191f-4f51-83ce-d93995cd5c09",
+ "resource_group_name" : "my_ml_tests",
+ "location" : "eastus",
+ "entities":[
+   {"name":"account",
+    "description":"This entity represents user account index key accountID.",
+    "version":"4",
+    "tags":{"data_type": "nonPII"},    
+    "index_columns":[{"name":"accountID", "type":"STRING"}] 
+   }
+   ],
+  "feature_sets":[
+   {"name":"transactions",
+    "description":"",
+    "version":"4",
+    "tags":{"data_type": "nonPII"},    
+    "stage":"Development",
+    "entities":["azureml:account:4"],
+    "transformation_code_path" : "/featurestore/featuresets/transactions/transformation_code",
+    "data_source_path" : "wasbs://data@azuremlexampledata.blob.core.windows.net/feature-store-prp/datasources/transactions-source/*.parquet",
+    "timestamp_column_name" : "timestamp",
+    "source_delay":{"days":0,"hours":0,"minutes":20},
+    "transformer_class_name" : "transaction_transform.TransactionFeatureTransformer",
+    "index_columns" : [{"name":"accountID", "type":"STRING"}],
+    "source_lookback":{"days":60,"hours":0,"minutes":0},
+    "temporal_join_lookback":{"days":60,"hours":0,"minutes":0},
+    "infer_schema":true,
+    "offline":{"active":true,
+               "instance_type":"standard_e8s_v3",
+               "spark_configuration":{"spark.driver.cores": 4,
+                                      "spark.driver.memory": "36g",
+                                      "spark.executor.cores": 4,
+                                      "spark.executor.memory": "36g",
+                                      "spark.executor.instances": 2
+                                      },
+               "schedule":{"interval":3, "frequency":"Hour", "start_time":"2023-04-15 00:04:10"}
+    }
+   },
+   {"name":"accounts",
+    "description":"This entity represents user account index key accountID.",
+    "version":"4",
+    "tags":{"data_type": "nonPII"},   
+    "stage":"Development",
+    "entities":["azureml:account:4"], 
+    "data_source_path" : "wasbs://data@azuremlexampledata.blob.core.windows.net/feature-store-prp/datasources/accounts-precalculated/*.parquet",
+    "timestamp_column_name" : "timestamp",
+    "index_columns":[{"name":"accountID", "type":"STRING"}], 
+    "temporal_join_lookback":{"days":365,"hours":0,"minutes":0},
+    "infer_schema":true
+   }   
+ ],
+ "offline_default":{"instance_type":"standard_e8s_v3",
+                    "spark_configuration":{"spark.driver.cores": 4,
+                                            "spark.driver.memory": "36g",
+                                            "spark.executor.cores": 4,
+                                            "spark.executor.memory": "36g",
+                                            "spark.executor.instances": 2
+                                            },
+                    "schedule":{"interval":3, "frequency":"Hour", "start_time":"2023-04-15 00:04:10"}
+ }
+}

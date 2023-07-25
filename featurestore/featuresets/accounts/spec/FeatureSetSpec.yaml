@@ -1,0 +1,29 @@
+features:
+- name: accountCountry
+  type: string
+- name: isUserRegistered
+  type: boolean
+- name: numPaymentRejects1dPerUser
+  type: double
+- name: accountAge
+  type: double
+index_columns:
+- name: accountID
+  type: string
+source:
+  path: wasbs://data@azuremlexampledata.blob.core.windows.net/feature-store-prp/datasources/accounts-precalculated/*.parquet
+  source_delay:
+    days: 0
+    hours: 0
+    minutes: 0
+  timestamp_column:
+    name: timestamp
+  type: parquet
+source_lookback:
+  days: 365
+  hours: 0
+  minutes: 0
+temporal_join_lookback:
+  days: 365
+  hours: 0
+  minutes: 0
